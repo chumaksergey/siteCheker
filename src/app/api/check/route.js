@@ -21,9 +21,13 @@ async function sendToTelegram(message) {
 
 export async function GET() {
   const urls = [
-    "https://xnice-trend.com/newtwist/",
-    "https://gabin.fun/magnoliya/",
-    "http://eko-rozsada.site/",
+    "https://xnice-trend.com/",
+    "https://eko-rozsada.site/",
+    "https://eko-sad.site/",
+    "https://eko-sadzhancy.site/",
+    "https://onlinesadzhancy.site/",
+    "https://pro-sadzhancy.space/",
+    "https://sadovyi-market.site/",
   ];
 
   const results = await Promise.all(

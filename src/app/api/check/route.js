@@ -41,15 +41,17 @@ export async function GET() {
     })
   );
 
-  // Отфильтровываем сайты, которые не работают
-  const offlineResults = results.filter((result) => !result.ok);
+  // Проверяем, есть ли хотя бы один недоступный сайт
+  const hasOffline = results.some((result) => !result.ok);
 
-  // Если есть недоступные сайты, отправляем сообщение
-  if (offlineResults.length > 0) {
-    const message = offlineResults
+  if (hasOffline) {
+    // Формируем сообщение со всеми сайтами
+    const message = results
       .map(
         (result) =>
-          `*URL:* ${result.url}\n*Status:* ${result.status}\n❌ *Offline*`
+          `*URL:* ${result.url}\n*Status:* ${result.status}\n${
+            result.ok ? "✅ *Online*" : "❌ *Offline*"
+          }`
       )
       .join("\n\n");
 

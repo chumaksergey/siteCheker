@@ -41,7 +41,7 @@ export async function GET() {
     .map(
       (result) =>
         `*URL:* ${result.url}\n*Status:* ${result.status}\n${
-          result.ok ? "✅ *Online*" : "❌ *Offline*"
+          result.ok ? "✅ *Online1*" : "❌ *Offline2*"
         }`
     )
     .join("\n\n");

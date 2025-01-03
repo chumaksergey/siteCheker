@@ -25,6 +25,7 @@ export async function GET() {
     "https://gabin.fun/magnoliya/",
     "http://eko-rozsada.site/",
   ];
+
   const results = await Promise.all(
     urls.map(async (url) => {
       try {
@@ -36,24 +37,26 @@ export async function GET() {
     })
   );
 
-  // Формируем сообщение для Telegram
-  const message = results
-    .map(
-      (result) =>
-        `*URL:* ${result.url}\n*Status:* ${result.status}\n${
-          result.ok ? "✅ *Online*" : "❌ *Offline*"
-        }`
-    )
-    .join("\n\n");
+  // Отфильтровываем сайты, которые не работают
+  const offlineResults = results.filter((result) => !result.ok);
 
-  // Отправляем сообщение в Telegram
-  try {
-    await sendToTelegram(message);
-  } catch (error) {
-    return NextResponse.json(
-      { error: "Не удалось отправить сообщение в Telegram" },
-      { status: 500 }
-    );
+  // Если есть недоступные сайты, отправляем сообщение
+  if (offlineResults.length > 0) {
+    const message = offlineResults
+      .map(
+        (result) =>
+          `*URL:* ${result.url}\n*Status:* ${result.status}\n❌ *Offline*`
+      )
+      .join("\n\n");
+
+    try {
+      await sendToTelegram(message);
+    } catch (error) {
+      return NextResponse.json(
+        { error: "Не удалось отправить сообщение в Telegram" },
+        { status: 500 }
+      );
+    }
   }
 
   return NextResponse.json(results);

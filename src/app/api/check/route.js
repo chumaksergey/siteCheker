@@ -21,7 +21,6 @@ async function sendToTelegram(message) {
 
 export async function GET() {
   const urls = [
-    "https://xnice-trend.com/",
     "https://eko-rozsada.site/",
     "https://eko-sad.site/",
     "https://eko-sadzhancy.site/",
